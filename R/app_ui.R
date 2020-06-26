@@ -7,21 +7,67 @@ app_ui <- function(request) {
   tagList(
     tags$style(HTML("
     body, pre { font-size: 22pt; }
-  ")),
+    body {
+      transition: all 0.2s ease-in-out;
+    }
+    .epoxy-inline-clickChoice-input:hover,
+    .epoxy-inline-clickChoice-input:focus {
+      background-color: #FDF3C3;
+      outline: none;
+    }
+    :root {
+      --epoxy-inline-clickChoice-color-hover: #F21B3F;
+      --epoxy-inline-clickChoice-color-focus: #7E3F8F;
+    }
+    #budget-container {
+      min-height: 90vh;
+      display: flex;
+      padding: 1em;
+      align-items: center;
+    }
+    #budget {
+      max-width: 600px;
+      text-align: center;
+    }
+    #budget-container {
+      justify-content: center;
+    }
+    #footer { text-align: center; }
+    @media screen and (min-width: 1200px) {
+      body, pre { font-size: 36pt; }
+      #budget { max-width: 850px; }
+    }
+    @media screen and (max-width: 768px) {
+      #footer { font-size: 12pt; }
+    }
+    ")),
     fluidPage(
-      rep_br(5),
-      column(width = 8, offset = 2,
-      epoxy::epoxyHTML(
-        .id = "demo",
-        .watch = list(click = c("year", "program")),
-        "<center><p>In {{year}}, the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the {{program}} budget.</p></center>"),
-      tags$style(
-        # not necessary, just looks cool
-        '[data-epoxy-input-click]:hover { background-color: #fcf0cb; }'
+      div(
+        id = "budget-container",
+        epoxy::epoxyHTML(
+          .id = "budget",
+          "In ",
+          epoxy:::epoxyInlineClickChoice("year", "Year", sort(unique(budget$year))),
+          ", the Toronto Police Service budget was {{strong times}} times ",
+          "{{times_direction}} the ",
+          epoxy:::epoxyInlineClickChoice("program", "Toronto City Program", sample(budget$program)),
+          " budget."
+        )
+      ),
+      div(
+        id = "footer",
+        "Data:",
+        tags$a(
+          href = "https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/",
+          "Toronto Open Data",
+          .noWS = "after"
+        ),
+        ", Code:",
+        tags$a(
+          href = "https://github.com/sharlagelfand/torontobudget",
+          "GitHub"
+        )
       )
-    ),
-    rep_br(10),
-    HTML("Data: <a href = 'https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/'> Toronto Open Data</a>, Code: <a href = 'https://github.com/sharlagelfand/torontobudget'>GitHub</a>")
-  )
+    )
   )
 }
