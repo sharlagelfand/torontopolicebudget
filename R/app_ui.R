@@ -12,7 +12,7 @@ app_ui <- function(request) {
     }
     .epoxy-inline-clickChoice-input:hover,
     .epoxy-inline-clickChoice-input:focus {
-      background-color: #FDF3C3;
+      background-color: #FFF3B7;
       outline: none;
     }
     :root {
@@ -50,7 +50,7 @@ app_ui <- function(request) {
           epoxy:::epoxyInlineClickChoice("year", "Year", sort(unique(budget$year))),
           ", the Toronto Police Service budget was {{strong times}} times ",
           "{{times_direction}} the ",
-          epoxy:::epoxyInlineClickChoice("program", "Toronto City Program", sample(budget$program)),
+          epoxy:::epoxyInlineClickChoice("program", "Toronto City Program", sample(unique(budget$program))),
           " budget."
         )
       ),
