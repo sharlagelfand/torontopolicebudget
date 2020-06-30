@@ -1,0 +1,21 @@
+[data-epoxy-input-click]:hover {
+  background-color: #fcf0cb;
+}
+
+.main-container {
+  position: relative;
+}
+
+.main-text {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#demo {
+  text-align: center;
+  font-size: 2em;
+}

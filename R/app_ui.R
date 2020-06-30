@@ -1,27 +1,52 @@
 #' The application User-Interface
 #'
 #' @param request Internal parameter for `{shiny}`.
-#' @importFrom shinyWidgets pickerInput
 #' @noRd
 app_ui <- function(request) {
   tagList(
-    tags$style(HTML("
-    body, pre { font-size: 22pt; }
-  ")),
-    fluidPage(
-      rep_br(5),
-      column(width = 8, offset = 2,
-      epoxy::epoxyHTML(
-        .id = "demo",
-        .watch = list(click = c("year", "program")),
-        "<center><p>In {{year}}, the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the {{program}} budget.</p></center>"),
-      tags$style(
-        # not necessary, just looks cool
-        '[data-epoxy-input-click]:hover { background-color: #fcf0cb; }'
+    golem_add_external_resources(),
+    fillPage(
+      fillRow(
+        class = "main-container",
+        height = "98%",
+        div(class = "main-text",
+        epoxy::epoxyHTML(
+          .id = "demo",
+          .watch = list(click = c("year", "program")),
+          "<p>In {{year}}, the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the {{program}} budget.</p>"
+        )
+        )
+      ),
+      fillRow(
+        id = "footer",
+        height = "2%",
+        HTML("Data: <a href = 'https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/'> Toronto Open Data</a>, Code: <a href = 'https://github.com/sharlagelfand/torontobudget'>GitHub</a>")
       )
-    ),
-    rep_br(10),
-    HTML("Data: <a href = 'https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/'> Toronto Open Data</a>, Code: <a href = 'https://github.com/sharlagelfand/torontobudget'>GitHub</a>")
+    )
   )
+}
+
+
+#' Add external Resources to the Application
+#'
+#' This function is internally used to add external
+#' resources inside the Shiny application.
+#'
+#' @import shiny
+#' @importFrom golem add_resource_path activate_js favicon bundle_resources
+#' @noRd
+golem_add_external_resources <- function() {
+  golem::add_resource_path(
+    "www", app_sys("app/www")
+  )
+
+  tags$head(
+    golem::favicon(),
+    golem::bundle_resources(
+      path = app_sys("app/www"),
+      app_title = "Toronto Police Budget"
+    )
+    # Add here other external resources
+    # for example, you can add shinyalert::useShinyalert()
   )
 }
