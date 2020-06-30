@@ -1,7 +1,3 @@
-[data-epoxy-input-click]:hover {
-  background-color: #fcf0cb;
-}
-
 .main-container {
   position: relative;
 }
@@ -18,4 +14,13 @@
 #demo {
   text-align: center;
   font-size: 2em;
+}
+
+:root {
+  --epoxy-inline-clickChoice-color-hover: black;
+  --epoxy-inline-clickChoice-color-focus: black;
+}
+
+.epoxy-inline-clickChoice-input:hover {
+  background-color: #fcf0cb;
 }

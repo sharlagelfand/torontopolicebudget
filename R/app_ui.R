@@ -9,12 +9,27 @@ app_ui <- function(request) {
       fillRow(
         class = "main-container",
         height = "98%",
-        div(class = "main-text",
-        epoxy::epoxyHTML(
-          .id = "demo",
-          .watch = list(click = c("year", "program")),
-          "<p>In {{year}}, the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the {{program}} budget.</p>"
-        )
+        div(
+          class = "main-text",
+          epoxy::epoxyHTML(
+            .id = "demo",
+            "<p>In ",
+            epoxy:::epoxyInlineClickChoice(
+              "year",
+              "Year",
+              as.character(2014:2019)
+            ),
+            " the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the ",
+            epoxy:::epoxyInlineClickChoice(
+              "program",
+              "City Program",
+              {
+                programs <- unique(budget[["program"]])
+                programs[which(programs != "Toronto Police Service")]
+              }
+            ),
+            " budget.</p>"
+          )
         )
       ),
       fillRow(
