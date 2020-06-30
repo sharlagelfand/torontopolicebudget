@@ -8,7 +8,6 @@ app_ui <- function(request) {
     fillPage(
       fillRow(
         class = "main-container",
-        height = "98%",
         div(
           class = "main-text",
           epoxy::epoxyHTML(
@@ -17,7 +16,7 @@ app_ui <- function(request) {
             epoxy:::epoxyInlineClickChoice(
               "year",
               "Year",
-              as.character(2014:2019)
+              as.character(2019:2014)
             ),
             " the Toronto Police Service budget was <b>{{times}}</b> times {{times_direction}} the ",
             epoxy:::epoxyInlineClickChoice(
@@ -29,13 +28,10 @@ app_ui <- function(request) {
               }
             ),
             " budget.</p>"
-          )
+          ),
+          rep_br(1),
+          HTML("<p>Data: <a href = 'https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/'> Toronto Open Data</a>, Code: <a href = 'https://github.com/sharlagelfand/torontobudget'>GitHub</a></p>")
         )
-      ),
-      fillRow(
-        id = "footer",
-        height = "2%",
-        HTML("Data: <a href = 'https://open.toronto.ca/dataset/budget-operating-budget-program-summary-by-expenditure-category/'> Toronto Open Data</a>, Code: <a href = 'https://github.com/sharlagelfand/torontobudget'>GitHub</a>")
       )
     )
   )
